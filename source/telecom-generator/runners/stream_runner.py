@@ -103,21 +103,24 @@ def generate_and_send_event(event_type, base_time=None):
         print("Error: Customers or cell sites not loaded")
         return False
     
+    # Event generator mapping
+    event_generators = {
+        "call": generate_call_event,
+        "sms": generate_sms_event,
+        "payment": generate_payment_event,
+        "recharge": generate_recharge_event,
+        "support": generate_support_event,
+    }
+    
     try:
-        # Generate event based on type
-        if event_type == "call":
-            event = generate_call_event(customers, cell_sites, base_time=base_time)
-        elif event_type == "sms":
-            event = generate_sms_event(customers, cell_sites, base_time=base_time)
-        elif event_type == "payment":
-            event = generate_payment_event(customers, cell_sites, base_time=base_time)
-        elif event_type == "recharge":
-            event = generate_recharge_event(customers, cell_sites, base_time=base_time)
-        elif event_type == "support":
-            event = generate_support_event(customers, cell_sites, base_time=base_time)
-        else:
+        # Get the appropriate generator function
+        generator_func = event_generators.get(event_type)
+        if not generator_func:
             print(f"Unknown event type: {event_type}")
             return False
+        
+        # Generate event
+        event = generator_func(customers, cell_sites, base_time=base_time)
         
         # Send to Kafka
         success = send_event_to_kafka(event_type, event)
