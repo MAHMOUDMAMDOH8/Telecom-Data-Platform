@@ -168,14 +168,25 @@ def generate_network_metrics() -> dict:
 def load_customers(filepath="dim_user.json"):
     filepath = Path(filepath)
     if not filepath.is_absolute():
-        filepath = Path(__file__).resolve().parents[2] / filepath
+        filepath = Path(__file__).resolve().parents[1] / filepath
     with filepath.open("r", encoding="utf-8") as f:
         users = json.load(f)
         for idx, user in enumerate(users, start=1001):
+            # Map msisdn to phone_number if it exists
+            if "msisdn" in user and "phone_number" not in user:
+                user["phone_number"] = user["msisdn"]
+            # Ensure phone_number exists
+            if "phone_number" not in user:
+                user["phone_number"] = user.get("msisdn", f"0100000000{idx}")
             user["customer_id"] = user["phone_number"]
             user["number"] = user["phone_number"]
+            # Map customer_type to plan_type if needed
+            if "customer_type" in user and "plan_type" not in user:
+                user["plan_type"] = user["customer_type"]
             user.setdefault("plan_type", random.choice(["Prepaid", "Postpaid"]))
-            user.setdefault("status", random.choice(["Active", "Inactive", "Suspended"]))
+            # Use status from JSON if available, otherwise set default
+            if "status" not in user or not user["status"]:
+                user["status"] = random.choice(["Active", "Inactive", "Suspended"])
             user["behavior_profile"] = get_customer_behavior_profile(user["customer_id"])
             city_info = random.choice(egyptian_cities)
             location = generate_location_data(city_info)
@@ -186,7 +197,7 @@ def load_customers(filepath="dim_user.json"):
 def load_cell_sites(filepath="dim_cell_site.json"):
     filepath = Path(filepath)
     if not filepath.is_absolute():
-        filepath = Path(__file__).resolve().parents[2] / filepath
+        filepath = Path(__file__).resolve().parents[1] / filepath
     with filepath.open("r", encoding="utf-8") as f:
         return json.load(f)
 
