@@ -286,6 +286,18 @@ def introduce_data_quality_issues(event, event_type, force_clean=False):
             if random.random() < 0.5:
                 event["body"] = None
             else:
+                # Handle from/to as objects - set a field to None
+                if isinstance(event.get("from"), dict):
+                    field_to_null = random.choice(["phone_number", "cell_site", "imei"])
+                    event["from"][field_to_null] = None
+                else:
+                    event["from"] = None
+        elif event_type == "call":
+            # Handle from/to as objects - set a field to None
+            if isinstance(event.get("from"), dict):
+                field_to_null = random.choice(["phone_number", "cell_site", "imei"])
+                event["from"][field_to_null] = None
+            else:
                 event["from"] = None
         issues_applied.append("null_field")
     if random.random() < 0.03:

@@ -6,7 +6,6 @@ from .base import (
     FRAUD_PATTERNS,
     apply_seasonal_patterns,
     generate_user_info,
-    get_customer_phone_number,
     introduce_data_quality_issues,
 )
 
@@ -41,22 +40,39 @@ def generate_call_event(customers, cell_sites, base_time=None, allow_data_issues
         call_duration_sec = 0
         billing_amount = 0.0
 
-    from_phone = get_customer_phone_number(customers, allow_data_issues=allow_data_issues, force_clean=force_clean)
-    to_phone = get_customer_phone_number(customers, allow_data_issues=allow_data_issues, force_clean=force_clean)
+    # Generate user info for 'from' (caller) with phone_number, cell_site, and imei
+    from_user_info = generate_user_info(customers, cell_sites, allow_data_issues=allow_data_issues, force_clean=force_clean)
+    
+    # Generate user info for 'to' (receiver) with phone_number, cell_site, and imei
+    to_user_info = generate_user_info(customers, cell_sites, allow_data_issues=allow_data_issues, force_clean=force_clean)
+
+    # Build 'from' object with phone_number, cell_site, and imei
+    from_data = {
+        "phone_number": from_user_info["number"],
+        "cell_site": from_user_info["cell_site"],
+        "imei": from_user_info["imei"]
+    }
+    
+    # Build 'to' object with phone_number, cell_site, and imei
+    to_data = {
+        "phone_number": to_user_info["number"],
+        "cell_site": to_user_info["cell_site"],
+        "imei": to_user_info["imei"]
+    }
 
     call_type = "International" if behavior_profile == "international" and random.random() < 0.3 else "Local"
 
     event = {
         "event_type": "call",
         "sid": f"CA{random.randint(10**8, 10**9)}",
-        "from": from_phone,
-        "to": to_phone,
+        "from": from_data,
+        "to": to_data,
         "call_duration_seconds": call_duration_sec,
         "status": call_status,
         "timestamp": base_time.strftime("%Y-%m-%d %H:%M:%S"),
         "call_type": call_type,
-        "phone_number": from_phone,
-        "customer": from_phone,
+        "phone_number": from_user_info["number"],  # Keep for backward compatibility
+        "customer": from_user_info["number"],  # Keep for backward compatibility
         "behavior_profile": behavior_profile,
         "seasonal_multiplier": round(seasonal_mult, 2),
         "billing_info": {"amount": billing_amount, "currency": "EGP"},
