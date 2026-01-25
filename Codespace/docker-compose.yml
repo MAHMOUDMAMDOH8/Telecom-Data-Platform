@@ -1,0 +1,30 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack-setup.sh:/etc/localstack/init/ready.d/script.sh
+    environment:
+      - DEBUG=1
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY-}
+      - EXTRA_CORS_ALLOWED_ORIGINS=*
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"   
+      - "9000:9000"  
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+      - clickhouse-logs:/var/log/clickhouse-server
+    environment:
+      - CLICKHOUSE_DB=default
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=clickhouse
+
+volumes:
+  localstack-data:
+  clickhouse-data:
+  clickhouse-logs:
