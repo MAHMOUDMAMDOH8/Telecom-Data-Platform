@@ -33,7 +33,7 @@ def get_spark_session(app_name="ETL-Iceberg", s3_endpoint="http://localhost:4566
 
 
 
-def read_from_bronze(table_name, schema, date=None, hour=None, bronze_bucket="s3a://telecom_lakehouse", spark=spark, multi_line=True):
+def read_from_bronze(table_name, schema, date=None, hour=None, bronze_bucket="s3a://telecom_lakehouse", spark=None, multi_line=True):
     """
     Read JSON data from bronze layer.
     
