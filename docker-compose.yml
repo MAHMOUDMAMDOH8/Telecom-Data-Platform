@@ -96,7 +96,7 @@ services:
       - "8081:8081"
     volumes:
       - spark_master_data:/opt/spark/data
-      - spark_shared:/opt/spark/shared
+      - ./spark_shared:/opt/spark_shared
       - ./spark-apps:/opt/spark/apps
       - ./spark-logs:/opt/spark/logs
     networks:
@@ -123,7 +123,7 @@ services:
       - "8082:8082"
     volumes:
       - spark_worker1_data:/opt/spark/data
-      - spark_shared:/opt/spark/shared
+      - ./spark_shared:/opt/spark_shared
       - ./spark-apps:/opt/spark/apps
     networks:
       - data_network
@@ -144,7 +144,7 @@ services:
       - "8083:8083"
     volumes:
       - spark_worker2_data:/opt/spark/data
-      - spark_shared:/opt/spark/shared
+      - ./spark_shared:/opt/spark_shared
       - ./spark-apps:/opt/spark/apps
     networks:
       - data_network
@@ -223,7 +223,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
       - ./airflow/config:/opt/airflow/config
       - ./spark-apps:/opt/airflow/spark-apps
-      - spark_shared:/opt/airflow/spark-shared
+      - ./spark_shared:/opt/airflow/spark_shared
     ports:
       - "8085:8080"
     command: webserver
@@ -257,7 +257,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
       - ./airflow/config:/opt/airflow/config
       - ./spark-apps:/opt/airflow/spark-apps
-      - spark_shared:/opt/airflow/spark-shared
+      - ./spark_shared:/opt/airflow/spark_shared
     command: scheduler
     networks:
       - data_network
@@ -289,7 +289,7 @@ services:
       - ./airflow/plugins:/opt/airflow/plugins
       - ./airflow/config:/opt/airflow/config
       - ./spark-apps:/opt/airflow/spark-apps
-      - spark_shared:/opt/airflow/spark-shared
+      - ./spark_shared:/opt/airflow/spark_shared
     command: celery worker
     networks:
       - data_network
