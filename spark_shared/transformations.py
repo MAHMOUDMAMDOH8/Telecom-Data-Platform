@@ -1,11 +1,21 @@
 
+from typing import Optional
+
 from pyspark.sql.functions import col, concat
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import when, lit
+from pyspark.sql.types import StructType
 
 
 def normalize_columns(df: DataFrame, columns: str, prefix: str) -> DataFrame:
-    fields = df.schema[columns].dataType.names
+    if columns not in df.columns:
+        return df
+
+    data_type = df.schema[columns].dataType
+    if not isinstance(data_type, StructType):
+        return df
+
+    fields = data_type.names
     for field in fields:
         new_col_name = f"{prefix}_{field}" if prefix else field
         df = df.withColumn(new_col_name, col(columns)[field])
@@ -14,9 +24,9 @@ def normalize_columns(df: DataFrame, columns: str, prefix: str) -> DataFrame:
 def add_rejection_reason(
     df: DataFrame,
     required_columns: list,
-    numeric_columns: list | None = None,
-    positive_columns: list | None = None,
-    is_between_columns: dict | None = None,
+    numeric_columns: Optional[list] = None,
+    positive_columns: Optional[list] = None,
+    is_between_columns: Optional[dict] = None,
     ) -> DataFrame:
 
 

@@ -84,7 +84,7 @@ services:
 
   # Apache Spark Master
   spark-master:
-    image: apache/spark:latest
+    image: apache/spark:3.4.4
     container_name: spark-master
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     environment:
@@ -109,7 +109,7 @@ services:
 
   # Apache Spark Worker 1
   spark-worker-1:
-    image: apache/spark:latest
+    image: apache/spark:3.4.4
     container_name: spark-worker-1
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     depends_on:
@@ -130,7 +130,7 @@ services:
 
   # Apache Spark Worker 2
   spark-worker-2:
-    image: apache/spark:latest
+    image: apache/spark:3.4.4
     container_name: spark-worker-2
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     depends_on:

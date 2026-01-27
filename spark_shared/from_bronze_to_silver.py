@@ -3,18 +3,60 @@ from transformations import *
 from scheam import *
 
 
-spark = get_spark_session(app_name="from_bronze_to_silver",
-   s3_bucket='s3a://telecom_lakehouse/',
-    s3_endpoint='https://expert-pancake-jv9wx6vww5w25gj4-4566.app.github.dev/',
-    access_key='test',
-    secret_key='test')
+def get_spark_session(
+    app_name="ETL-Iceberg",
+    s3_endpoint="https://expert-pancake-jv9wx6vww5w25gj4-4566.app.github.dev",
+    access_key="test",
+    secret_key="test"
+):
+    spark_jars_packages = [
+        "org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.5.0",
+        "org.apache.hadoop:hadoop-aws:3.3.4",
+        "com.amazonaws:aws-java-sdk-bundle:1.12.262"
+    ]
+
+    conf = (
+        SparkConf()
+        .setAppName(app_name)
+        .set("spark.jars.packages", ",".join(spark_jars_packages))
+        .set("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
+
+        # S3A / LocalStack
+        .set("spark.hadoop.fs.s3a.endpoint", s3_endpoint)
+        .set("spark.hadoop.fs.s3a.access.key", access_key)
+        .set("spark.hadoop.fs.s3a.secret.key", secret_key)
+        .set("spark.hadoop.fs.s3a.path.style.access", "true")
+        .set("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+        .set("spark.hadoop.fs.s3a.connection.ssl.enabled", "true")
+
+        # 🔥 FIX FOR NumberFormatException: "60s"
+        .set("spark.hadoop.fs.s3a.connection.timeout", "60000")
+        .set("spark.hadoop.fs.s3a.connection.establish.timeout", "60000")
+        .set("spark.hadoop.fs.s3a.attempts.maximum", "5")
+        .set("spark.hadoop.fs.s3a.retry.limit", "5")
+        .set("spark.hadoop.fs.s3a.retry.interval", "2000")
+        .set("spark.hadoop.fs.s3a.threads.max", "50")
+
+        # Iceberg
+        .set("spark.sql.catalog.local", "org.apache.iceberg.spark.SparkCatalog")
+        .set("spark.sql.catalog.local.type", "hadoop")
+        .set("spark.sql.catalog.local.warehouse", "s3a://telecomlakehouse/iceberg")
+    )
+
+    spark = SparkSession.builder.config(conf=conf).getOrCreate()
+    spark.sparkContext.setLogLevel("WARN")
+    return spark
+
+
+spark = get_spark_session()
+
 
 
 
 
 def calls_transformation():
 
-    df = read_from_bronze('call', call_schema(), spark=spark)
+    df = read_bronze_table(table_name='call', spark=spark)
     df = normalize_columns(df, 'from', 'from_')
     df = normalize_columns(df, 'to', 'to_')
     df = normalize_columns(df, 'billing_info', '')
@@ -34,7 +76,7 @@ def calls_transformation():
 
 def sms_transformation():
 
-    df = read_from_bronze('sms', sms_schema(), spark=spark)
+    df = read_bronze_table(table_name='sms', spark=spark)
     df = normalize_columns(df, 'from', 'from_')
     df = normalize_columns(df, 'to', 'to_')
     df = normalize_columns(df, 'billing_info', '')
@@ -56,7 +98,7 @@ def sms_transformation():
 
 
 def payment_transformation():
-    df = read_from_bronze('payment', payment_schema(), spark=spark)
+    df = read_bronze_table(table_name='payment', spark=spark)
     df = normalize_columns(df, 'billing_info', '')
     final_df = add_rejection_reason(df,
     required_columns=['event_type', 'sid', 'timestamp', 'status',
@@ -72,7 +114,7 @@ def payment_transformation():
 
 
 def recharge_transformation():
-    df = read_from_bronze('recharge', recharge_schema(), spark=spark)
+    df = read_bronze_table(table_name='recharge', spark=spark)
     df = normalize_columns(df, 'billing_info', '')
     
     final_df = add_rejection_reason(df,
@@ -90,7 +132,7 @@ def recharge_transformation():
 
 
 def support_transformation():
-    df = read_from_bronze('support', support_schema(), spark=spark)
+    df = read_bronze_table(table_name='support', spark=spark)
     
     # Build is_between_columns conditionally
     is_between_cols = {}
