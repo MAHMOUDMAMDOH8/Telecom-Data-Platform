@@ -104,7 +104,7 @@ def read_from_iceberg(table_name, spark):
         raise
 
 
-def write_to_iceberg(df, table_name, mode="append" , output_location="s3a://telecomlakehouse/iceberg"):
+def write_to_iceberg(df, table_name, mode="append"):
     spark = df.sparkSession
     full_table = f"local.{table_name}"
 
