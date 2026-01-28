@@ -5,10 +5,10 @@ from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
 
 # Spark submit command configuration
-# Note: Using docker exec to run spark-submit in spark-master container
-# The spark-shared volume is mounted at /opt/spark/shared in Spark containers
+# Note: Run spark-submit inside the spark-master container
+# The spark_shared volume is mounted at /opt/spark_shared in Spark containers
 spark_submit_command = (
-        "spark-submit "
+        "docker exec spark-master /opt/spark/bin/spark-submit "
         "--master spark://spark-master:7077 "
         "--packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.5.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 "
         "--conf spark.hadoop.fs.s3a.endpoint=https://expert-pancake-jv9wx6vww5w25gj4-4566.app.github.dev/ "
@@ -17,7 +17,7 @@ spark_submit_command = (
         "--conf spark.hadoop.fs.s3a.path.style.access=true "
         "--conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem "
         "--conf spark.hadoop.fs.s3a.connection.ssl.enabled=true "
-        "/opt/spark/shared/from_bronze_to_silver.py"
+        "/opt/spark_shared/from_bronze_to_silver.py"
 )
 
 # Default arguments for the DAG

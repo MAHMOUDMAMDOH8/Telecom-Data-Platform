@@ -117,17 +117,52 @@ def write_to_iceberg(df, table_name, mode="append"):
             df.writeTo(full_table).append()
 
 
-def move_to_archive(df, table_name):
+def move_to_archive(
+    df,
+    table_name,
+    archive_bucket="s3a://telecomlakehouse",
+    archive_layer="bronze_archive"
+):
     spark = df.sparkSession
     now = datetime.now().strftime("%Y%m%d%H")
     new_table = f"local.{table_name}_{now}"
 
+    # Archive into Iceberg history table
     if not spark.catalog.tableExists(new_table):
         print(f"Table {new_table} does not exist. Creating it...")
         df.writeTo(new_table).create()
     else:
         print(f"Appending to existing Iceberg table: {new_table}")
         df.writeTo(new_table).append()
+
+    # Also move raw bronze files to an archive path
+    if "source_file" in df.columns:
+        jvm = spark.sparkContext._jvm
+        hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+        archive_base = f"{archive_bucket}/{archive_layer}/{table_name}/{now}"
+        fs = jvm.org.apache.hadoop.fs.FileSystem.get(
+            jvm.java.net.URI(archive_base),
+            hadoop_conf
+        )
+
+        dest_base_path = jvm.org.apache.hadoop.fs.Path(archive_base)
+        if not fs.exists(dest_base_path):
+            fs.mkdirs(dest_base_path)
+
+        source_files = [
+            row.source_file
+            for row in df.select("source_file").distinct().collect()
+            if row.source_file
+        ]
+
+        for src in source_files:
+            src_path = jvm.org.apache.hadoop.fs.Path(src)
+            dest_path = jvm.org.apache.hadoop.fs.Path(
+                f"{archive_base}/{src_path.getName()}"
+            )
+            fs.rename(src_path, dest_path)
+
+        print(f"Archived {len(source_files)} raw files to {archive_base}")
 
     return df
 
@@ -148,11 +183,14 @@ def delete_raws_in_bronze(
         if hour:
             base_path += f"/{hour}"
 
-    fs = spark.sparkContext._jvm.org.apache.hadoop.fs.FileSystem.get(
-        spark.sparkContext._jsc.hadoopConfiguration()
+    jvm = spark.sparkContext._jvm
+    hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+    fs = jvm.org.apache.hadoop.fs.FileSystem.get(
+        jvm.java.net.URI(base_path),
+        hadoop_conf
     )
 
-    path = spark.sparkContext._jvm.org.apache.hadoop.fs.Path(base_path)
+    path = jvm.org.apache.hadoop.fs.Path(base_path)
 
     if not fs.exists(path):
         print(f"No files found at {base_path}")

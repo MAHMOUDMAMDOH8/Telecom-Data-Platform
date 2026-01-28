@@ -57,8 +57,8 @@ spark = get_spark_session()
 def calls_transformation():
 
     df = read_bronze_table(table_name='call', spark=spark)
-    df = normalize_columns(df, 'from', 'from_')
-    df = normalize_columns(df, 'to', 'to_')
+    df = normalize_columns(df, 'from', 'from')
+    df = normalize_columns(df, 'to', 'to')
     df = normalize_columns(df, 'billing_info', '')
 
     final_df = add_rejection_reason(df,
@@ -72,13 +72,14 @@ def calls_transformation():
 
     write_to_iceberg(final_df, 'calls')
     move_to_archive(df, 'calls')
+    delete_raws_in_bronze('call')
 
 
 def sms_transformation():
 
     df = read_bronze_table(table_name='sms', spark=spark)
-    df = normalize_columns(df, 'from', 'from_')
-    df = normalize_columns(df, 'to', 'to_')
+    df = normalize_columns(df, 'from', 'from')
+    df = normalize_columns(df, 'to', 'to')
     df = normalize_columns(df, 'billing_info', '')
     df = normalize_columns(df, 'network_metrics', '')
 
@@ -95,6 +96,7 @@ def sms_transformation():
 
     write_to_iceberg(final_df, 'sms')
     move_to_archive(df, 'sms')
+    delete_raws_in_bronze('sms')
 
 
 def payment_transformation():
@@ -111,6 +113,7 @@ def payment_transformation():
 
     write_to_iceberg(final_df, 'payment')
     move_to_archive(df, 'payment')
+    delete_raws_in_bronze('payment')
 
 
 def recharge_transformation():
@@ -129,6 +132,7 @@ def recharge_transformation():
 
     write_to_iceberg(final_df, 'recharge')
     move_to_archive(df, 'recharge')
+    delete_raws_in_bronze('recharge')
 
 
 def support_transformation():
@@ -151,6 +155,7 @@ def support_transformation():
 
     write_to_iceberg(final_df, 'support')
     move_to_archive(df, 'support')
+    delete_raws_in_bronze('support')
 
 
 def process_all_transformations():

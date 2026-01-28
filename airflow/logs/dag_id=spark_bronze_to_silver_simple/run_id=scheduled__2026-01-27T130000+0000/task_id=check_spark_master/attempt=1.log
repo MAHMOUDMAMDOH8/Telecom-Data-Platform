@@ -1,0 +1,25 @@
+[2026-01-27T14:29:41.308+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: spark_bronze_to_silver_simple.check_spark_master scheduled__2026-01-27T13:00:00+00:00 [queued]>
+[2026-01-27T14:29:41.319+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: spark_bronze_to_silver_simple.check_spark_master scheduled__2026-01-27T13:00:00+00:00 [queued]>
+[2026-01-27T14:29:41.320+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 3
+[2026-01-27T14:29:41.338+0000] {taskinstance.py:2191} INFO - Executing <Task(BashOperator): check_spark_master> on 2026-01-27 13:00:00+00:00
+[2026-01-27T14:29:41.342+0000] {standard_task_runner.py:60} INFO - Started process 67 to run task
+[2026-01-27T14:29:41.347+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'spark_bronze_to_silver_simple', 'check_spark_master', 'scheduled__2026-01-27T13:00:00+00:00', '--job-id', '2', '--raw', '--subdir', 'DAGS_FOLDER/spark_bronze_to_silver_dag.py', '--cfg-path', '/tmp/tmp9h0l75de']
+[2026-01-27T14:29:41.350+0000] {standard_task_runner.py:88} INFO - Job 2: Subtask check_spark_master
+[2026-01-27T14:29:41.419+0000] {task_command.py:423} INFO - Running <TaskInstance: spark_bronze_to_silver_simple.check_spark_master scheduled__2026-01-27T13:00:00+00:00 [running]> on host 0028dfdbde57
+[2026-01-27T14:29:41.496+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data-engineering' AIRFLOW_CTX_DAG_ID='spark_bronze_to_silver_simple' AIRFLOW_CTX_TASK_ID='check_spark_master' AIRFLOW_CTX_EXECUTION_DATE='2026-01-27T13:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-01-27T13:00:00+00:00'
+[2026-01-27T14:29:41.503+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2026-01-27T14:29:41.505+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'docker ps | grep spark-master || exit 1']
+[2026-01-27T14:29:41.517+0000] {subprocess.py:86} INFO - Output:
+[2026-01-27T14:29:41.591+0000] {subprocess.py:93} INFO - Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+[2026-01-27T14:29:41.594+0000] {subprocess.py:97} INFO - Command exited with return code 1
+[2026-01-27T14:29:41.605+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/bash.py", line 212, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 1.
+[2026-01-27T14:29:41.608+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=spark_bronze_to_silver_simple, task_id=check_spark_master, execution_date=20260127T130000, start_date=20260127T142941, end_date=20260127T142941
+[2026-01-27T14:29:41.622+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 2 for task check_spark_master (Bash command failed. The command returned a non-zero exit code 1.; 67)
+[2026-01-27T14:29:41.644+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-01-27T14:29:41.668+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

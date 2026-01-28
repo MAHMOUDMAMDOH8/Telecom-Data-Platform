@@ -33,6 +33,8 @@ def add_rejection_reason(
     df = df.withColumn("rejection_reason", lit(""))
 
     for col_name in required_columns:
+        if col_name not in df.columns:
+            continue
         df = df.withColumn(
             "rejection_reason",
             when(
@@ -43,6 +45,8 @@ def add_rejection_reason(
 
     if numeric_columns:
         for col_name in numeric_columns:
+            if col_name not in df.columns:
+                continue
             df = df.withColumn(
                 "rejection_reason",
                 when(
@@ -53,6 +57,8 @@ def add_rejection_reason(
 
     if positive_columns:
         for col_name in positive_columns:
+            if col_name not in df.columns:
+                continue
             df = df.withColumn(
                 "rejection_reason",
                 when(
@@ -63,6 +69,8 @@ def add_rejection_reason(
 
     if is_between_columns:
         for col_name, (min_val, max_val) in is_between_columns.items():
+            if col_name not in df.columns:
+                continue
             df = df.withColumn(
                 "rejection_reason",
                 when(

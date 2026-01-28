@@ -11,3 +11,6 @@ Write-Host "`nVerifying files were copied..."
 docker exec spark-master ls -la /opt/spark/shared/
 
 
+
+
+
