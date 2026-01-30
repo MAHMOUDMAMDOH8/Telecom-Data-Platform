@@ -70,7 +70,6 @@ The architecture implements a **Medallion Architecture** pattern:
 - PowerShell (for Windows automation scripts)
 
 ### Infrastructure
-- LocalStack (for S3-compatible storage)
 - MinIO (object storage)
 - ClickHouse (analytical database)
 - Apache Kafka
@@ -341,7 +340,7 @@ erDiagram
 ### Schema Characteristics
 - Surrogate keys (MD5 hashes) for dimensions
 - Date and time dimensions for temporal analysis
-- Star schema patterns within the galaxy structure
+- Galaxy  schema patterns within the galaxy structure
 - Optimized for analytical queries
 - Conformed dimensions (dim_date, dim_time) shared across all fact tables
 
