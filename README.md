@@ -112,6 +112,9 @@ The architecture implements a **Medallion Architecture** pattern:
 - **Access Keys**: Set via environment variables
 - **Path Style Access**: Enabled for LocalStack/MinIO compatibility
 
+## layers 
+![layers ](image/Untitled Diagram-layers.drawio.png)
+
 ## Silver Layer (examples)
 
 The Silver layer contains cleaned and validated data. Examples include:
