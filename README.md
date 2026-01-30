@@ -117,7 +117,7 @@ The architecture implements a **Medallion Architecture** pattern:
 
 The platform implements a **Medallion Architecture** pattern with three distinct layers for data quality and processing:
 
-![Medallion Architecture Layers](image/Untitled Diagram-layers.drawio.png)
+![Medallion Architecture Layers](image/Untitled Diagram-layers.png)
 
 ### Layer Overview
 - **Bronze Layer**: Raw, unprocessed data ingested from source systems
