@@ -10,6 +10,7 @@
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [Catalogs and Storage](#catalogs-and-storage)
+- [Medallion Architecture Layers](#medallion-architecture-layers)
 - [Silver Layer (examples)](#silver-layer-examples)
 - [Gold Layer (galaxy schema)](#gold-layer-galaxy-schema)
 - [Data Warehouse Model](#data-warehouse-model)
@@ -112,8 +113,16 @@ The architecture implements a **Medallion Architecture** pattern:
 - **Access Keys**: Set via environment variables
 - **Path Style Access**: Enabled for LocalStack/MinIO compatibility
 
-## layers 
-![layers ](image/Untitled Diagram-layers.drawio.png)
+## Medallion Architecture Layers
+
+The platform implements a **Medallion Architecture** pattern with three distinct layers for data quality and processing:
+
+![Medallion Architecture Layers](image/Untitled Diagram-layers.drawio.png)
+
+### Layer Overview
+- **Bronze Layer**: Raw, unprocessed data ingested from source systems
+- **Silver Layer**: Cleaned, validated, and enriched data with quality checks
+- **Gold Layer**: Business-ready aggregated data and dimensional models for analytics
 
 ## Silver Layer (examples)
 
