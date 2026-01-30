@@ -1,7 +1,0 @@
-#!/bin/bash
-# Test command to run Spark transformation job
-# This command runs the from_bronze_to_silver.py script in the Spark container
-# Uses Java system properties to set Ivy cache directory
-
-docker exec spark-master bash -c "mkdir -p /tmp/.ivy2/cache /tmp/.ivy2/jars && /opt/spark/bin/spark-submit --master spark://spark-master:7077 --driver-java-options '-Divy.cache.dir=/tmp/.ivy2 -Divy.home=/tmp/.ivy2' --packages org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.5.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262 --conf spark.hadoop.fs.s3a.endpoint=https://expert-pancake-jv9wx6vww5w25gj4-4566.app.github.dev/ --conf spark.hadoop.fs.s3a.access.key=test --conf spark.hadoop.fs.s3a.secret.key=test --conf spark.hadoop.fs.s3a.path.style.access=true --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem --conf spark.hadoop.fs.s3a.connection.ssl.enabled=true --conf spark.sql.catalog.local=org.apache.iceberg.spark.SparkCatalog --conf spark.sql.catalog.local.type=hadoop --conf spark.sql.catalog.local.warehouse=s3a://telecom_lakehouse/silver_layer --driver-memory 1g --executor-memory 2g --executor-cores 2 --num-executors 2 --py-files /opt/spark/shared/init.py,/opt/spark/shared/transformations.py,/opt/spark/shared/scheam.py /opt/spark/shared/from_bronze_to_silver.py"
-

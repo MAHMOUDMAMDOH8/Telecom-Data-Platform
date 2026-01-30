@@ -1,118 +1,117 @@
+import os
+
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, year, month, dayofmonth, hour, date_format, to_date
-from pyspark.sql.functions import broadcast
+from pyspark.sql.types import (
+    ArrayType,
+    MapType,
+    StructType,
+    StringType,
+    BooleanType,
+    IntegerType,
+    LongType,
+    DoubleType,
+    FloatType,
+    DecimalType,
+)
 
-# Note: In a real environment, you'd include the ClickHouse JDBC jar in your --jars or packages
-spark = SparkSession.builder \
-    .appName("SilverToGold_Calls") \
-    .config("spark.jars.packages", "com.clickhouse:clickhouse-jdbc:0.4.6,org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.5.0,org.apache.hadoop:hadoop-aws:3.3.4,com.amazonaws:aws-java-sdk-bundle:1.12.262") \
-    .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
-    .config("spark.sql.catalog.local", "org.apache.iceberg.spark.SparkCatalog") \
-    .config("spark.sql.catalog.local.type", "hadoop") \
-    .config("spark.sql.catalog.local.warehouse", "s3a://telecom_lakehouse/warehouse") \
+
+spark = (
+    SparkSession.builder
+    .appName("SilverToClickHouse")
+    .config(
+        "spark.jars.packages",
+        "com.clickhouse:clickhouse-jdbc:0.4.6,"
+        "org.apache.iceberg:iceberg-spark-runtime-3.4_2.12:1.5.0,"
+        "org.apache.hadoop:hadoop-aws:3.3.4,"
+        "com.amazonaws:aws-java-sdk-bundle:1.12.262",
+    )
+    .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions")
+    .config("spark.sql.catalog.local", "org.apache.iceberg.spark.SparkCatalog")
+    .config("spark.sql.catalog.local.type", "hadoop")
+    .config("spark.sql.catalog.local.warehouse", "s3a://telecomlakehouse/iceberg")
+    .config("spark.hadoop.fs.s3a.endpoint", "https://expert-pancake-jv9wx6vww5w25gj4-4566.app.github.dev/")
+    .config("spark.hadoop.fs.s3a.access.key", "test")
+    .config("spark.hadoop.fs.s3a.secret.key", "test")
+    .config("spark.hadoop.fs.s3a.path.style.access", "true")
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+    .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "true")
     .getOrCreate()
-
-# Reading the User Dim (denormalized JSON)
-# For a small JSON string/file, you can use:
-users_df = spark.read.json("s3a://telecom_lakehouse/source/telecom-generator/DIM_USER.json")
-
-# Reading the Site Dim
-sites_df = spark.read.json("s3a://telecom_lakehouse/source/telecom-generator/dim_cell_site.json")
-
-# Reading the Device Dim
-devices_df = spark.read.json("s3a://telecom_lakehouse/source/telecom-generator/DIM_DEVICE.json")
+)
 
 
-def enrich_fact_with_time(df, ts_col="timestamp"):
-    return df.withColumn("event_date", to_date(col(ts_col))) \
-             .withColumn("year", year(col(ts_col))) \
-             .withColumn("month", month(col(ts_col))) \
-             .withColumn("day", dayofmonth(col(ts_col))) \
-             .withColumn("hour", hour(col(ts_col))) \
-             .withColumn("date_key", date_format(col(ts_col), "yyyyMMdd").cast("int"))
+clickhouse_url = os.getenv("CLICKHOUSE_URL")
+clickhouse_host = os.getenv("CLICKHOUSE_HOST", "clickhouse")
+clickhouse_port = os.getenv("CLICKHOUSE_PORT", "8123")
+clickhouse_db = os.getenv("CLICKHOUSE_DB", "telecom_warehouse")
+clickhouse_user = os.getenv("CLICKHOUSE_USER", "default")
+clickhouse_password = os.getenv("CLICKHOUSE_PASSWORD", "clickhouse")
+clickhouse_ssl = os.getenv("CLICKHOUSE_SSL")
+clickhouse_compress = os.getenv("CLICKHOUSE_COMPRESS")
 
+if not clickhouse_url:
+    clickhouse_url = f"jdbc:clickhouse://{clickhouse_host}:{clickhouse_port}/{clickhouse_db}"
 
-clickhouse_options = {
-    "url": "jdbc:clickhouse://localhost:8123/default",
-    "dbtable": "fact_calls_gold",
-    "user": "default",
-    "password": "",
-    "driver": "com.clickhouse.jdbc.ClickHouseDriver"
+clickhouse_base_options = {
+    "url": clickhouse_url,
+    "user": clickhouse_user,
+    "password": clickhouse_password,
+    "driver": "com.clickhouse.jdbc.ClickHouseDriver",
 }
 
-# Reading the Calls Fact from Iceberg table
-calls_silver = spark.read.table("local.calls").filter("rejection_reason IS NULL")
-calls_enriched = enrich_fact_with_time(calls_silver, ts_col="timestamp")
+if clickhouse_ssl:
+    clickhouse_base_options["ssl"] = clickhouse_ssl
 
-calls_fact_final = calls_enriched.alias("c") \
-    .join(broadcast(users_df).alias("u"), col("c.from_phone_number") == col("u.msisdn"), "left") \
-    .join(broadcast(devices_df).alias("d"), col("c.imei") == col("d.imei"), "left") \
-    .select(
-        "c.sid", "c.timestamp", "c.event_date", "c.date_key", "c.year", "c.month", "c.hour",
-        "c.from_phone_number", "c.to_phone_number", "c.call_duration_seconds", "c.amount", "c.call_type",
-        "u.customer_type", "u.city", "u.age_group", # User attributes
-        "d.brand", "d.model", "d.is_smartphone"     # Device attributes
-    )
-# Writing the final Calls Fact to ClickHouse
-calls_fact_final.write \
-    .format("jdbc") \
-    .options(**clickhouse_options) \
-    .mode("append") \
-    .save()
+if clickhouse_compress is not None:
+    clickhouse_base_options["compress"] = clickhouse_compress
 
 
-# 1. Read Silver SMS
-sms_silver = spark.read.table("local.sms").filter("rejection_reason IS NULL")
-sms_enriched = enrich_fact_with_time(sms_silver)
+def write_table_to_clickhouse(source_table, target_table):
+    df = spark.read.table(f"local.{source_table}")
+    if "is_rejected" in df.columns:
+        df = df.filter("is_rejected = false")
+    elif "rejection_reason" in df.columns:
+        df = df.filter("rejection_reason IS NULL")
 
-# 2. Join with Dims
-sms_fact_final = sms_enriched.alias("s") \
-    .join(broadcast(users_df).alias("u"), col("s.from_phone_number") == col("u.msisdn"), "left") \
-    .join(broadcast(devices_df).alias("d"), col("s.imei") == col("d.imei"), "left") \
-    .select(
-        "s.sid", "s.timestamp", "s.event_date", "s.date_key", "s.year", "s.month",
-        "s.from_phone_number", "s.to_phone_number", "s.amount", "s.status",
-        "u.customer_type", "u.city", "d.brand", "d.model"
-    )
+    # Drop flags that are null after filtering and may be non-nullable in ClickHouse
+    for col_name in ("rejection_reason", "is_rejected"):
+        if col_name in df.columns:
+            df = df.drop(col_name)
 
-# 3. Write to ClickHouse
-sms_fact_final.write.format("jdbc").options(**clickhouse_options).option("dbtable", "fact_sms_gold").mode("append").save()
+    # Drop complex types (struct/array/map) that JDBC can't serialize
+    complex_cols = [
+        field.name
+        for field in df.schema.fields
+        if isinstance(field.dataType, (StructType, ArrayType, MapType))
+    ]
+    if complex_cols:
+        df = df.drop(*complex_cols)
 
-# --- PAYMENTS ---
-pay_silver = spark.read.table("local.payment").filter("rejection_reason IS NULL")
-pay_fact = enrich_fact_with_time(pay_silver).alias("p") \
-    .join(broadcast(users_df).alias("u"), col("p.phone_number") == col("u.msisdn"), "left") \
-    .select(
-        "p.sid", "p.timestamp", "p.event_date", "p.date_key",
-        "p.payment_amount", "p.payment_method", "p.status", "p.transaction_id",
-        "u.customer_type", "u.city"
-    )
+    # Fill nulls for basic types to satisfy non-nullable ClickHouse columns
+    fill_values = {}
+    for field in df.schema.fields:
+        if isinstance(field.dataType, StringType):
+            fill_values[field.name] = ""
+        elif isinstance(field.dataType, BooleanType):
+            fill_values[field.name] = False
+        elif isinstance(field.dataType, (IntegerType, LongType, DoubleType, FloatType, DecimalType)):
+            fill_values[field.name] = 0
+    if fill_values:
+        df = df.fillna(fill_values)
 
-pay_fact.write.format("jdbc").options(**clickhouse_options) \
-    .option("dbtable", "fact_payments_gold").mode("append").save()
+    df.write.format("jdbc") \
+        .options(**clickhouse_base_options) \
+        .option("dbtable", target_table) \
+        .mode("append") \
+        .save()
 
-# --- RECHARGE ---
-rech_silver = spark.read.table("local.recharge").filter("rejection_reason IS NULL")
-rech_fact = enrich_fact_with_time(rech_silver).alias("r") \
-    .join(broadcast(users_df).alias("u"), col("r.phone_number") == col("u.msisdn"), "left") \
-    .select(
-        "r.sid", "r.timestamp", "r.event_date", "r.date_key",
-        "r.recharge_amount", "r.balance_before", "r.balance_after",
-        "u.customer_type", "u.city"
-    )
 
-rech_fact.write.format("jdbc").options(**clickhouse_options) \
-    .option("dbtable", "fact_recharge_gold").mode("append").save()
+table_map = {
+    "calls": "silver_calls",
+    "sms": "silver_sms",
+    "payment": "silver_payment",
+    "recharge": "silver_recharge",
+    "support": "silver_support",
+}
 
-supp_silver = spark.read.table("local.support").filter("rejection_reason IS NULL")
-supp_fact = enrich_fact_with_time(supp_silver).alias("sup") \
-    .join(broadcast(users_df).alias("u"), col("sup.phone_number") == col("u.msisdn"), "left") \
-    .select(
-        "sup.sid", "sup.timestamp", "sup.event_date", "sup.date_key",
-        "sup.wait_time_seconds", "sup.resolution_time_seconds", "sup.satisfaction_score",
-        "sup.reason", "sup.channel", "sup.agent_id",
-        "u.customer_type", "u.city"
-    )
-
-supp_fact.write.format("jdbc").options(**clickhouse_options) \
-    .option("dbtable", "fact_support_gold").mode("append").save()
+for source, target in table_map.items():
+    write_table_to_clickhouse(source, target)

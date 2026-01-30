@@ -1,0 +1,352 @@
+[
+  {
+    "agent_id": "AG1248",
+    "name": "Nour El-Sayed",
+    "department": "Retention",
+    "city": "Mansoura",
+    "status": "Training"
+  },
+  {
+    "agent_id": "AG1298",
+    "name": "Reem Omar",
+    "department": "Billing",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG1622",
+    "name": "Karim Sami",
+    "department": "Billing",
+    "city": "Aswan",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG1816",
+    "name": "Amr Ahmed",
+    "department": "Complaints",
+    "city": "Aswan",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG2155",
+    "name": "Ahmed Khaled",
+    "department": "Activation",
+    "city": "Port Said",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG2536",
+    "name": "Sherif Sami",
+    "department": "Sales",
+    "city": "Alexandria",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG2733",
+    "name": "Heba Ibrahim",
+    "department": "Billing",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG2969",
+    "name": "Fatma Khaled",
+    "department": "Customer Service",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG2995",
+    "name": "Hany Ahmed",
+    "department": "Billing",
+    "city": "Port Said",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3031",
+    "name": "Aya Soliman",
+    "department": "Complaints",
+    "city": "Port Said",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3317",
+    "name": "Mariam El-Shamy",
+    "department": "Retention",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3499",
+    "name": "Mahmoud Sami",
+    "department": "Technical Support",
+    "city": "Luxor",
+    "status": "Training"
+  },
+  {
+    "agent_id": "AG3583",
+    "name": "Tarek El-Shamy",
+    "department": "Complaints",
+    "city": "Tanta",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3636",
+    "name": "Omar Said",
+    "department": "Sales",
+    "city": "Alexandria",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3726",
+    "name": "Heba Sami",
+    "department": "Technical Support",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG3776",
+    "name": "Nour Soliman",
+    "department": "Sales",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG4052",
+    "name": "Nour Khaled",
+    "department": "Retention",
+    "city": "Luxor",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG4501",
+    "name": "Yasmin Ahmed",
+    "department": "Activation",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG4871",
+    "name": "Wael Sami",
+    "department": "Billing",
+    "city": "Ismailia",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5055",
+    "name": "Tarek Mohamed",
+    "department": "Complaints",
+    "city": "Luxor",
+    "status": "Training"
+  },
+  {
+    "agent_id": "AG5081",
+    "name": "Nada El-Shamy",
+    "department": "Activation",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5083",
+    "name": "Karim Khaled",
+    "department": "Customer Service",
+    "city": "Suez",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5147",
+    "name": "Nada Abdel-Rahman",
+    "department": "Sales",
+    "city": "Tanta",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5199",
+    "name": "Mahmoud Abdel-Rahman",
+    "department": "Billing",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5545",
+    "name": "Reem Salem",
+    "department": "Sales",
+    "city": "Cairo",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG5689",
+    "name": "Hany Mohamed",
+    "department": "Activation",
+    "city": "Suez",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG6509",
+    "name": "Youssef Farid",
+    "department": "Sales",
+    "city": "Alexandria",
+    "status": "Training"
+  },
+  {
+    "agent_id": "AG6684",
+    "name": "Mahmoud Salem",
+    "department": "Customer Service",
+    "city": "Luxor",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG6827",
+    "name": "Khaled Khaled",
+    "department": "Sales",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG6883",
+    "name": "Wael Said",
+    "department": "Retention",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG7394",
+    "name": "Aya Khaled",
+    "department": "Complaints",
+    "city": "Alexandria",
+    "status": "On Leave"
+  },
+  {
+    "agent_id": "AG7565",
+    "name": "Hassan El-Sayed",
+    "department": "Customer Service",
+    "city": "Port Said",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG7625",
+    "name": "Mariam Omar",
+    "department": "Technical Support",
+    "city": "Tanta",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG7746",
+    "name": "Mohamed Mahmoud",
+    "department": "Sales",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG7944",
+    "name": "Hassan Omar",
+    "department": "Sales",
+    "city": "Giza",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8109",
+    "name": "Salma Mahmoud",
+    "department": "Customer Service",
+    "city": "Hurghada",
+    "status": "On Leave"
+  },
+  {
+    "agent_id": "AG8319",
+    "name": "Aya Mohamed",
+    "department": "Activation",
+    "city": "Cairo",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8326",
+    "name": "Nader Salem",
+    "department": "Billing",
+    "city": "Aswan",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8742",
+    "name": "Nada Salem",
+    "department": "Sales",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8759",
+    "name": "Ibrahim El-Shamy",
+    "department": "Retention",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8768",
+    "name": "Wael Omar",
+    "department": "Customer Service",
+    "city": "Luxor",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG8810",
+    "name": "Nader Ahmed",
+    "department": "Complaints",
+    "city": "Giza",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9078",
+    "name": "Amr Khaled",
+    "department": "Billing",
+    "city": "Giza",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9223",
+    "name": "Youssef Ali",
+    "department": "Technical Support",
+    "city": "Ismailia",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9483",
+    "name": "Layla El-Shamy",
+    "department": "Billing",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9519",
+    "name": "Sherif Khaled",
+    "department": "Retention",
+    "city": "Mansoura",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9581",
+    "name": "Dina Tawfik",
+    "department": "Activation",
+    "city": "Port Said",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9594",
+    "name": "Salma Ali",
+    "department": "Sales",
+    "city": "Ismailia",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9665",
+    "name": "Aya Mahmoud",
+    "department": "Retention",
+    "city": "Hurghada",
+    "status": "Active"
+  },
+  {
+    "agent_id": "AG9762",
+    "name": "Nada Abdel-Rahman",
+    "department": "Activation",
+    "city": "Aswan",
+    "status": "Active"
+  }
+]

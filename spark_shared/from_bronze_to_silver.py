@@ -105,7 +105,7 @@ def payment_transformation():
     final_df = add_rejection_reason(df,
     required_columns=['event_type', 'sid', 'timestamp', 'status',
                      'customer', 'payment_type', 'payment_amount', 'payment_method',
-                     'phone_number', 'transaction_id', 'invoice_number', 'seasonal_multiplier', 'amount', 'currency'
+                     'phone_number', 'transaction_id', 'seasonal_multiplier', 'amount', 'currency'
                     ],
     numeric_columns=['payment_amount', 'amount'],
     positive_columns=['payment_amount', 'amount']

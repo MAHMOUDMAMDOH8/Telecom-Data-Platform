@@ -1,0 +1,583 @@
+[
+  {
+    "cell_id": "CELL00001",
+    "city": "Cairo",
+    "site_name": "Cairo_Tower_6",
+    "latitude": 22.602884,
+    "longitude": 29.426351
+  },
+  {
+    "cell_id": "CELL00002",
+    "city": "Cairo",
+    "site_name": "Cairo_Tower_2",
+    "latitude": 27.676115,
+    "longitude": 31.513591
+  },
+  {
+    "cell_id": "CELL00003",
+    "city": "Cairo",
+    "site_name": "Cairo_Tower_3",
+    "latitude": 23.086851,
+    "longitude": 27.350644
+  },
+  {
+    "cell_id": "CELL00004",
+    "city": "Cairo",
+    "site_name": "Cairo_Tower_4",
+    "latitude": 28.413719,
+    "longitude": 27.490232
+  },
+  {
+    "cell_id": "CELL00005",
+    "city": "Cairo",
+    "site_name": "Cairo_Tower_5",
+    "latitude": 27.775688,
+    "longitude": 25.194872
+  },
+  {
+    "cell_id": "CELL00006",
+    "city": "Giza",
+    "site_name": "Giza_Tower_1",
+    "latitude": 25.007243,
+    "longitude": 30.110196
+  },
+  {
+    "cell_id": "CELL00007",
+    "city": "Alexandria",
+    "site_name": "Alexandria_Tower_1",
+    "latitude": 28.218447,
+    "longitude": 25.242821
+  },
+  {
+    "cell_id": "CELL00008",
+    "city": "Alexandria",
+    "site_name": "Alexandria_Tower_2",
+    "latitude": 29.438077,
+    "longitude": 34.976906
+  },
+  {
+    "cell_id": "CELL00009",
+    "city": "Alexandria",
+    "site_name": "Alexandria_Tower_3",
+    "latitude": 25.317058,
+    "longitude": 30.291366
+  },
+  {
+    "cell_id": "CELL00010",
+    "city": "Alexandria",
+    "site_name": "Alexandria_Tower_4",
+    "latitude": 22.440542,
+    "longitude": 30.668375
+  },
+  {
+    "cell_id": "CELL00011",
+    "city": "Shubra El Kheima",
+    "site_name": "ShubraElKheima_Tower_1",
+    "latitude": 27.322691,
+    "longitude": 29.817543
+  },
+  {
+    "cell_id": "CELL00012",
+    "city": "Port Said",
+    "site_name": "PortSaid_Tower_1",
+    "latitude": 25.702657,
+    "longitude": 33.467492
+  },
+  {
+    "cell_id": "CELL00013",
+    "city": "Suez",
+    "site_name": "Suez_Tower_1",
+    "latitude": 26.828275,
+    "longitude": 26.463606
+  },
+  {
+    "cell_id": "CELL00014",
+    "city": "Suez",
+    "site_name": "Suez_Tower_2",
+    "latitude": 28.051968,
+    "longitude": 33.761885
+  },
+  {
+    "cell_id": "CELL00015",
+    "city": "Luxor",
+    "site_name": "Luxor_Tower_1",
+    "latitude": 28.749005,
+    "longitude": 33.621676
+  },
+  {
+    "cell_id": "CELL00016",
+    "city": "Luxor",
+    "site_name": "Luxor_Tower_2",
+    "latitude": 24.757158,
+    "longitude": 26.843519
+  },
+  {
+    "cell_id": "CELL00017",
+    "city": "Luxor",
+    "site_name": "Luxor_Tower_3",
+    "latitude": 31.059237,
+    "longitude": 32.539619
+  },
+  {
+    "cell_id": "CELL00018",
+    "city": "Luxor",
+    "site_name": "Luxor_Tower_4",
+    "latitude": 28.748337,
+    "longitude": 29.674179
+  },
+  {
+    "cell_id": "CELL00019",
+    "city": "Luxor",
+    "site_name": "Luxor_Tower_5",
+    "latitude": 31.865806,
+    "longitude": 28.671372
+  },
+  {
+    "cell_id": "CELL00020",
+    "city": "Aswan",
+    "site_name": "Aswan_Tower_1",
+    "latitude": 31.509941,
+    "longitude": 26.365135
+  },
+  {
+    "cell_id": "CELL00021",
+    "city": "Mansoura",
+    "site_name": "Mansoura_Tower_1",
+    "latitude": 24.209173,
+    "longitude": 30.05316
+  },
+  {
+    "cell_id": "CELL00022",
+    "city": "Mansoura",
+    "site_name": "Mansoura_Tower_2",
+    "latitude": 23.765678,
+    "longitude": 33.846765
+  },
+  {
+    "cell_id": "CELL00023",
+    "city": "Mansoura",
+    "site_name": "Mansoura_Tower_3",
+    "latitude": 29.430975,
+    "longitude": 29.441215
+  },
+  {
+    "cell_id": "CELL00024",
+    "city": "Mansoura",
+    "site_name": "Mansoura_Tower_4",
+    "latitude": 28.129981,
+    "longitude": 26.27328
+  },
+  {
+    "cell_id": "CELL00025",
+    "city": "Tanta",
+    "site_name": "Tanta_Tower_1",
+    "latitude": 23.13906,
+    "longitude": 31.181628
+  },
+  {
+    "cell_id": "CELL00026",
+    "city": "Tanta",
+    "site_name": "Tanta_Tower_2",
+    "latitude": 25.948721,
+    "longitude": 34.640049
+  },
+  {
+    "cell_id": "CELL00027",
+    "city": "Tanta",
+    "site_name": "Tanta_Tower_3",
+    "latitude": 26.754011,
+    "longitude": 29.497785
+  },
+  {
+    "cell_id": "CELL00028",
+    "city": "Tanta",
+    "site_name": "Tanta_Tower_4",
+    "latitude": 27.209099,
+    "longitude": 31.600104
+  },
+  {
+    "cell_id": "CELL00029",
+    "city": "Fayoum",
+    "site_name": "Fayoum_Tower_1",
+    "latitude": 28.75883,
+    "longitude": 33.581655
+  },
+  {
+    "cell_id": "CELL00030",
+    "city": "Fayoum",
+    "site_name": "Fayoum_Tower_2",
+    "latitude": 28.388649,
+    "longitude": 28.32445
+  },
+  {
+    "cell_id": "CELL00031",
+    "city": "Fayoum",
+    "site_name": "Fayoum_Tower_3",
+    "latitude": 28.457605,
+    "longitude": 28.824501
+  },
+  {
+    "cell_id": "CELL00032",
+    "city": "Zagazig",
+    "site_name": "Zagazig_Tower_1",
+    "latitude": 25.750526,
+    "longitude": 30.546305
+  },
+  {
+    "cell_id": "CELL00033",
+    "city": "Ismailia",
+    "site_name": "Ismailia_Tower_1",
+    "latitude": 22.217224,
+    "longitude": 30.458766
+  },
+  {
+    "cell_id": "CELL00034",
+    "city": "Ismailia",
+    "site_name": "Ismailia_Tower_2",
+    "latitude": 29.952883,
+    "longitude": 33.029732
+  },
+  {
+    "cell_id": "CELL00035",
+    "city": "Ismailia",
+    "site_name": "Ismailia_Tower_3",
+    "latitude": 24.768157,
+    "longitude": 28.844683
+  },
+  {
+    "cell_id": "CELL00036",
+    "city": "Ismailia",
+    "site_name": "Ismailia_Tower_4",
+    "latitude": 22.411834,
+    "longitude": 34.095493
+  },
+  {
+    "cell_id": "CELL00037",
+    "city": "Assiut",
+    "site_name": "Assiut_Tower_1",
+    "latitude": 28.87635,
+    "longitude": 27.146596
+  },
+  {
+    "cell_id": "CELL00038",
+    "city": "Damietta",
+    "site_name": "Damietta_Tower_1",
+    "latitude": 22.406366,
+    "longitude": 25.172108
+  },
+  {
+    "cell_id": "CELL00039",
+    "city": "Beni Suef",
+    "site_name": "BeniSuef_Tower_1",
+    "latitude": 22.369365,
+    "longitude": 25.384394
+  },
+  {
+    "cell_id": "CELL00040",
+    "city": "Beni Suef",
+    "site_name": "BeniSuef_Tower_2",
+    "latitude": 27.348265,
+    "longitude": 27.786331
+  },
+  {
+    "cell_id": "CELL00041",
+    "city": "Beni Suef",
+    "site_name": "BeniSuef_Tower_3",
+    "latitude": 31.651697,
+    "longitude": 25.280725
+  },
+  {
+    "cell_id": "CELL00042",
+    "city": "Minya",
+    "site_name": "Minya_Tower_1",
+    "latitude": 22.226503,
+    "longitude": 33.440558
+  },
+  {
+    "cell_id": "CELL00043",
+    "city": "Minya",
+    "site_name": "Minya_Tower_2",
+    "latitude": 28.134128,
+    "longitude": 30.059407
+  },
+  {
+    "cell_id": "CELL00044",
+    "city": "Minya",
+    "site_name": "Minya_Tower_3",
+    "latitude": 30.705278,
+    "longitude": 25.849996
+  },
+  {
+    "cell_id": "CELL00045",
+    "city": "Minya",
+    "site_name": "Minya_Tower_4",
+    "latitude": 28.69665,
+    "longitude": 31.549222
+  },
+  {
+    "cell_id": "CELL00046",
+    "city": "Minya",
+    "site_name": "Minya_Tower_5",
+    "latitude": 31.288233,
+    "longitude": 32.378102
+  },
+  {
+    "cell_id": "CELL00047",
+    "city": "Qena",
+    "site_name": "Qena_Tower_1",
+    "latitude": 31.71458,
+    "longitude": 32.953474
+  },
+  {
+    "cell_id": "CELL00048",
+    "city": "Sohag",
+    "site_name": "Sohag_Tower_1",
+    "latitude": 25.635493,
+    "longitude": 26.419827
+  },
+  {
+    "cell_id": "CELL00049",
+    "city": "Sohag",
+    "site_name": "Sohag_Tower_2",
+    "latitude": 29.983928,
+    "longitude": 26.218518
+  },
+  {
+    "cell_id": "CELL00050",
+    "city": "Sohag",
+    "site_name": "Sohag_Tower_3",
+    "latitude": 25.85671,
+    "longitude": 27.533534
+  },
+  {
+    "cell_id": "CELL00051",
+    "city": "Kafr El Sheikh",
+    "site_name": "KafrElSheikh_Tower_1",
+    "latitude": 24.059582,
+    "longitude": 33.372455
+  },
+  {
+    "cell_id": "CELL00052",
+    "city": "Banha",
+    "site_name": "Banha_Tower_1",
+    "latitude": 30.61915,
+    "longitude": 34.788923
+  },
+  {
+    "cell_id": "CELL00053",
+    "city": "Hurghada",
+    "site_name": "Hurghada_Tower_1",
+    "latitude": 25.495629,
+    "longitude": 31.930852
+  },
+  {
+    "cell_id": "CELL00054",
+    "city": "Hurghada",
+    "site_name": "Hurghada_Tower_2",
+    "latitude": 25.305248,
+    "longitude": 32.338816
+  },
+  {
+    "cell_id": "CELL00055",
+    "city": "Hurghada",
+    "site_name": "Hurghada_Tower_3",
+    "latitude": 31.69897,
+    "longitude": 33.341856
+  },
+  {
+    "cell_id": "CELL00056",
+    "city": "El Mahalla El Kubra",
+    "site_name": "ElMahallaElKubra_Tower_1",
+    "latitude": 23.877233,
+    "longitude": 31.683936
+  },
+  {
+    "cell_id": "CELL00057",
+    "city": "Damanhur",
+    "site_name": "Damanhur_Tower_1",
+    "latitude": 27.105785,
+    "longitude": 31.632123
+  },
+  {
+    "cell_id": "CELL00058",
+    "city": "Damanhur",
+    "site_name": "Damanhur_Tower_2",
+    "latitude": 22.940745,
+    "longitude": 25.660694
+  },
+  {
+    "cell_id": "CELL00059",
+    "city": "10th of Ramadan",
+    "site_name": "10thofRamadan_Tower_1",
+    "latitude": 28.978277,
+    "longitude": 29.846624
+  },
+  {
+    "cell_id": "CELL00060",
+    "city": "10th of Ramadan",
+    "site_name": "10thofRamadan_Tower_2",
+    "latitude": 23.132217,
+    "longitude": 27.20962
+  },
+  {
+    "cell_id": "CELL00061",
+    "city": "10th of Ramadan",
+    "site_name": "10thofRamadan_Tower_3",
+    "latitude": 24.823349,
+    "longitude": 33.302182
+  },
+  {
+    "cell_id": "CELL00062",
+    "city": "6th of October",
+    "site_name": "6thofOctober_Tower_1",
+    "latitude": 22.660462,
+    "longitude": 32.703872
+  },
+  {
+    "cell_id": "CELL00063",
+    "city": "6th of October",
+    "site_name": "6thofOctober_Tower_2",
+    "latitude": 22.606322,
+    "longitude": 30.565355
+  },
+  {
+    "cell_id": "CELL00064",
+    "city": "6th of October",
+    "site_name": "6thofOctober_Tower_3",
+    "latitude": 26.463455,
+    "longitude": 31.98912
+  },
+  {
+    "cell_id": "CELL00065",
+    "city": "6th of October",
+    "site_name": "6thofOctober_Tower_4",
+    "latitude": 24.674449,
+    "longitude": 26.360244
+  },
+  {
+    "cell_id": "CELL00066",
+    "city": "Obour",
+    "site_name": "Obour_Tower_1",
+    "latitude": 23.609401,
+    "longitude": 31.056395
+  },
+  {
+    "cell_id": "CELL00067",
+    "city": "Obour",
+    "site_name": "Obour_Tower_2",
+    "latitude": 25.929622,
+    "longitude": 27.264109
+  },
+  {
+    "cell_id": "CELL00068",
+    "city": "Obour",
+    "site_name": "Obour_Tower_3",
+    "latitude": 27.110079,
+    "longitude": 25.678701
+  },
+  {
+    "cell_id": "CELL00069",
+    "city": "Obour",
+    "site_name": "Obour_Tower_4",
+    "latitude": 23.179717,
+    "longitude": 32.187085
+  },
+  {
+    "cell_id": "CELL00070",
+    "city": "Obour",
+    "site_name": "Obour_Tower_5",
+    "latitude": 25.964925,
+    "longitude": 31.042389
+  },
+  {
+    "cell_id": "CELL00071",
+    "city": "New Cairo",
+    "site_name": "NewCairo_Tower_1",
+    "latitude": 26.228251,
+    "longitude": 25.112141
+  },
+  {
+    "cell_id": "CELL00072",
+    "city": "New Cairo",
+    "site_name": "NewCairo_Tower_2",
+    "latitude": 23.597978,
+    "longitude": 30.062347
+  },
+  {
+    "cell_id": "CELL00073",
+    "city": "New Cairo",
+    "site_name": "NewCairo_Tower_3",
+    "latitude": 25.509528,
+    "longitude": 34.889767
+  },
+  {
+    "cell_id": "CELL00074",
+    "city": "New Cairo",
+    "site_name": "NewCairo_Tower_4",
+    "latitude": 28.737521,
+    "longitude": 27.518617
+  },
+  {
+    "cell_id": "CELL00075",
+    "city": "New Cairo",
+    "site_name": "NewCairo_Tower_5",
+    "latitude": 27.513785,
+    "longitude": 30.429181
+  },
+  {
+    "cell_id": "CELL00076",
+    "city": "Shebin El Kom",
+    "site_name": "ShebinElKom_Tower_1",
+    "latitude": 27.702886,
+    "longitude": 34.733339
+  },
+  {
+    "cell_id": "CELL00077",
+    "city": "Shebin El Kom",
+    "site_name": "ShebinElKom_Tower_2",
+    "latitude": 29.928891,
+    "longitude": 32.026064
+  },
+  {
+    "cell_id": "CELL00078",
+    "city": "Shebin El Kom",
+    "site_name": "ShebinElKom_Tower_3",
+    "latitude": 27.160984,
+    "longitude": 26.539047
+  },
+  {
+    "cell_id": "CELL00079",
+    "city": "Shebin El Kom",
+    "site_name": "ShebinElKom_Tower_4",
+    "latitude": 28.758379,
+    "longitude": 26.836077
+  },
+  {
+    "cell_id": "CELL00080",
+    "city": "Arish",
+    "site_name": "Arish_Tower_1",
+    "latitude": 28.764964,
+    "longitude": 32.441575
+  },
+  {
+    "cell_id": "CELL00081",
+    "city": "Marsa Matruh",
+    "site_name": "MarsaMatruh_Tower_1",
+    "latitude": 23.113777,
+    "longitude": 28.474697
+  },
+  {
+    "cell_id": "CELL00082",
+    "city": "Marsa Matruh",
+    "site_name": "MarsaMatruh_Tower_2",
+    "latitude": 23.138913,
+    "longitude": 32.062425
+  },
+  {
+    "cell_id": "CELL00083",
+    "city": "Marsa Matruh",
+    "site_name": "MarsaMatruh_Tower_3",
+    "latitude": 22.662907,
+    "longitude": 32.769249
+  }
+]

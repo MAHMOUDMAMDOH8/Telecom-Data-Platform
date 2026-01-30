@@ -121,13 +121,12 @@ def move_to_archive(
     df,
     table_name,
     archive_bucket="s3a://telecomlakehouse",
-    archive_layer="bronze_archive"
+    archive_layer="archive"
 ):
     spark = df.sparkSession
     now = datetime.now().strftime("%Y%m%d%H")
     new_table = f"local.{table_name}_{now}"
 
-    # Archive into Iceberg history table
     if not spark.catalog.tableExists(new_table):
         print(f"Table {new_table} does not exist. Creating it...")
         df.writeTo(new_table).create()
@@ -135,34 +134,59 @@ def move_to_archive(
         print(f"Appending to existing Iceberg table: {new_table}")
         df.writeTo(new_table).append()
 
-    # Also move raw bronze files to an archive path
     if "source_file" in df.columns:
         jvm = spark.sparkContext._jvm
         hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
-        archive_base = f"{archive_bucket}/{archive_layer}/{table_name}/{now}"
-        fs = jvm.org.apache.hadoop.fs.FileSystem.get(
-            jvm.java.net.URI(archive_base),
-            hadoop_conf
-        )
 
-        dest_base_path = jvm.org.apache.hadoop.fs.Path(archive_base)
-        if not fs.exists(dest_base_path):
-            fs.mkdirs(dest_base_path)
 
-        source_files = [
-            row.source_file
-            for row in df.select("source_file").distinct().collect()
-            if row.source_file
-        ]
+        if "event_date" in df.columns:
+            rows = df.select("source_file", "event_date").distinct().collect()
+        else:
+            rows = df.select("source_file").distinct().collect()
 
-        for src in source_files:
+        fs = None
+        archived_count = 0
+
+        for row in rows:
+            src = row.source_file
+            if not src:
+                continue
+
+
+            date_str = None
+            if "event_date" in df.columns:
+                try:
+                    date_str = row.event_date
+                except Exception:
+                    date_str = None
+
+            if not date_str:
+
+                date_str = datetime.now().strftime("%Y%m%d")
+            else:
+  
+                date_str = str(date_str).replace("-", "")
+
+            archive_base = f"{archive_bucket}/{archive_layer}/{table_name}/{date_str}"
+
+            if fs is None:
+                fs = jvm.org.apache.hadoop.fs.FileSystem.get(
+                    jvm.java.net.URI(archive_base),
+                    hadoop_conf
+                )
+
+            dest_base_path = jvm.org.apache.hadoop.fs.Path(archive_base)
+            if not fs.exists(dest_base_path):
+                fs.mkdirs(dest_base_path)
+
             src_path = jvm.org.apache.hadoop.fs.Path(src)
             dest_path = jvm.org.apache.hadoop.fs.Path(
                 f"{archive_base}/{src_path.getName()}"
             )
             fs.rename(src_path, dest_path)
+            archived_count += 1
 
-        print(f"Archived {len(source_files)} raw files to {archive_base}")
+        print(f"Archived {archived_count} raw files under {archive_bucket}/{archive_layer}/{table_name}/<event_date>")
 
     return df
 
